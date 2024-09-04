@@ -19,14 +19,10 @@ public class Task {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotNull(message = "Name cannot be null")
     private String name;
-    @NotNull(message = "Description cannot be null")
     private String description;
     // May change this to an enum or another table later
-    @NotNull(message = "Status cannot be null")
     private String status;
-    @NotNull(message = "Duration cannot be null")
     private Integer duration;
 
     @Column(name = "create_date")
