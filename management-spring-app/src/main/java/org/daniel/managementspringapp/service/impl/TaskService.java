@@ -70,7 +70,6 @@ public class TaskService implements CrudService<TaskDto, Long> {
         Optional.ofNullable(taskDto.getDescription()).ifPresent(existingTask::setDescription);
         Optional.ofNullable(taskDto.getStatus()).ifPresent(existingTask::setStatus);
         Optional.ofNullable(taskDto.getDuration()).ifPresent(existingTask::setDuration);
-        existingTask.setLastUpdateDate(Date.from(Instant.now()));
 
         return taskMapper.fromTask(taskRepository.save(existingTask));
     }

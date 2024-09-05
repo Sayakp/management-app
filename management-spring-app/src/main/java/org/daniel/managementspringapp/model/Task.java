@@ -26,10 +26,12 @@ public class Task {
     private Integer duration;
 
     @Column(name = "create_date")
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Date createDate;
 
     @Column(name = "last_update_date")
+    @Temporal(TemporalType.TIMESTAMP)
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", timezone = "UTC")
     private Date lastUpdateDate;
 
@@ -39,6 +41,17 @@ public class Task {
 
     public Date getLastUpdateDate() {
         return (lastUpdateDate != null) ? new Date(lastUpdateDate.getTime()) : null;
+    }
+
+    @PrePersist
+    protected void onCreate() {
+        createDate = new Date();
+        lastUpdateDate = new Date();
+    }
+
+    @PreUpdate
+    protected void onUpdate() {
+        lastUpdateDate = new Date();
     }
 }
 
