@@ -2,7 +2,6 @@ package org.daniel.managementspringapp.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotNull;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -24,6 +23,9 @@ public class Task {
     // May change this to an enum or another table later
     private String status;
     private Integer duration;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
 
     @Column(name = "create_date")
     @Temporal(TemporalType.TIMESTAMP)
