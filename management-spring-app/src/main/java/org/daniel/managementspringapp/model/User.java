@@ -11,6 +11,7 @@ import java.util.List;
 @EqualsAndHashCode(exclude = {"password", "tasks"})
 @ToString(exclude = {"password"})
 @Entity
+@Table(name = "app_user")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
