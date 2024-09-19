@@ -17,8 +17,7 @@ import java.util.Optional;
 public class UserService {
 
     UserRepository userRepository;
-    PasswordEncoder passwordEncoder;
-    UserMapper userMapper;
+    PasswordEncoder passwordEncoder;    UserMapper userMapper;
 
     public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;

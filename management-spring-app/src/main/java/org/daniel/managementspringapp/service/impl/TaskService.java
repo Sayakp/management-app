@@ -10,10 +10,9 @@ import org.daniel.managementspringapp.service.interfaces.CrudService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.Instant;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
+import static org.daniel.managementspringapp.utils.ResourceAuthorizationHandler.verifyUserCanModifyResource;
 
 @Service
 public class TaskService implements CrudService<TaskDto, Long> {
@@ -48,6 +47,11 @@ public class TaskService implements CrudService<TaskDto, Long> {
     @Transactional
     @Override
     public void delete(Long id) {
+        Task taskToDelete = taskRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("Task not found")
+        );
+        verifyUserCanModifyResource(taskToDelete.getUser().getId());
+
         taskRepository.deleteById(id);
     }
 
@@ -57,14 +61,7 @@ public class TaskService implements CrudService<TaskDto, Long> {
         Task existingTask = taskRepository.findById(taskDto.getId()).orElseThrow(
                 () -> new ResourceNotFoundException("Task not found")
         );
-
-        // Prevent unnecessary db operations in case there is nothing to update
-        if (taskDto.getName() == null &&
-                taskDto.getDescription() == null &&
-                taskDto.getStatus() == null &&
-                taskDto.getDuration() == null) {
-            throw new NoFieldsToUpdateException("No fields to update");
-        }
+        verifyUserCanModifyResource(existingTask.getUser().getId());
 
         Optional.ofNullable(taskDto.getName()).ifPresent(existingTask::setName);
         Optional.ofNullable(taskDto.getDescription()).ifPresent(existingTask::setDescription);
