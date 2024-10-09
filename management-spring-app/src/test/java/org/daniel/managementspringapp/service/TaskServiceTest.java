@@ -25,7 +25,7 @@ import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @SpringJUnitConfig
-class TaskServiceTest {
+public class TaskServiceTest {
 
     @Mock
     private TaskRepository taskRepository;
@@ -41,8 +41,7 @@ class TaskServiceTest {
     private User user;
 
     @BeforeEach
-    void setUp() {
-        MockitoAnnotations.openMocks(this);
+    void init() {
         user = new User();
         user.setId(1L);
 
